@@ -1,0 +1,54 @@
+﻿<Window x:Class="Map.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:Map"
+        xmlns:local1="clr-namespace:Map.ViewModel"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    
+    <Window.Resources>
+        <local1:MapViewModel x:Key="vm"/>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+
+
+        <ComboBox ItemsSource="{Binding AllItems,Source={StaticResource vm}}" Text="{Binding Path=CurrentItem,Source={StaticResource vm},UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="200" Height="30" IsEditable="True" ></ComboBox>
+       
+        <Button Command="{Binding EnterPointCommand,Source={StaticResource vm}}" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalContentAlignment="Center"  Width="100" Height="30" Content="Найти"/>
+       
+        <TextBlock Grid.Row="3" Text="{Binding Error, Source={StaticResource vm}}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+        
+        <m:Map x:Name="myMap"
+              CredentialsProvider="AuqHbfa2OIEt6xpkkSgj3L4wTYR7-MDgYC9wjJrg4826a5aCN0ZumRBiisl7lcvG"
+              Grid.Column="1"
+              Grid.Row="1"
+              Grid.RowSpan="4"
+              Mode="AerialWithLabels">
+            <m:Pushpin Location="{Binding Location, Source={StaticResource vm}}" Visibility="{Binding PushpinVisibility, Source={StaticResource vm}}"/>
+
+
+        </m:Map>
+
+
+    </Grid>
+
+</Window>
+    
+
